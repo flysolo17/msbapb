@@ -1,0 +1,50 @@
+<div class="modal-header">
+  <h4 class="modal-title">Login Admin Account</h4>
+  <button
+    type="button"
+    class="btn-close"
+    aria-label="Close"
+    (click)="activeModal.dismiss('Cross click')"
+  ></button>
+</div>
+
+<div class="modal-body">
+  <form [formGroup]="loginForm$" (submit)="onSubmit()">
+    <div class="form-floating mb-3">
+      <input
+        type="email"
+        class="form-control"
+        id="email"
+        formControlName="email"
+      />
+      <label for="email" class="form-label">Email</label>
+      <div
+        *ngIf="
+          loginForm$.get('email')?.invalid && loginForm$.get('email')?.touched
+        "
+        class="text-danger"
+      >
+        email is required
+      </div>
+    </div>
+    <div class="form-floating mb-3">
+      <input
+        type="password"
+        class="form-control"
+        id="password"
+        formControlName="password"
+      />
+      <label for="password" class="form-label">Password</label>
+      <div
+        *ngIf="
+          loginForm$.get('position')?.invalid &&
+          loginForm$.get('position')?.touched
+        "
+        class="text-danger"
+      >
+        password is required
+      </div>
+    </div>
+    <button class="btn btn-primary" type="submit">Login</button>
+  </form>
+</div>

@@ -1,0 +1,44 @@
+<div class="d-flex vh-100">
+  <div
+    class="d-flex flex-column gap-3 p-3 align-items-center justify-content-between"
+    style="min-width: 250px"
+  >
+    <img
+      src="../../../assets/images/logopnp.png"
+      width="100px"
+      height="100px"
+    />
+    <ul ngbNav class="nav-pills flex-column w-100 flex-grow-1">
+      <div class="d-flex flex-column">
+        <div class="flex-grow-1">
+          <li [ngbNavItem]="link.fragment" *ngFor="let link of links">
+            <a ngbNavLink [routerLink]="link.fragment">
+              <i [ngClass]="link.icon" class="me-3"></i>
+              {{ link.title }}</a
+            >
+          </li>
+        </div>
+        <div class="">
+          <li ngbNavItem="accounts">
+            <a ngbNavLink routerLink="accounts">
+              <i class="fa-solid fa-user me-3"></i>
+              Accounts</a
+            >
+          </li>
+          <li class="nav-item">
+            <button class="nav-link" (click)="logout()">
+              <i class="fa-solid fa-right-from-bracket me-3"></i>Logout
+            </button>
+          </li>
+        </div>
+      </div>
+    </ul>
+  </div>
+
+  <div class="flex-grow-1 overflow-y-scroll">
+    <header class="bg-black w-100 text-white">
+      <span class="fw-light ps-3"> PNP Administrator </span>
+    </header>
+    <router-outlet></router-outlet>
+  </div>
+</div>

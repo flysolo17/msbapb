@@ -1,0 +1,49 @@
+<div class="container-fluid">
+  <div class="d-flex flex-column gap-3 p-3">
+    <div class="d-flex align-items-center justify-content-between">
+      <h5 class="text-primary">Personels</h5>
+      <div class="d-flex gap-3">
+        <button class="btn btn-primary" (click)="refresh()">
+          <i class="fa-solid fa-arrows-rotate"></i>
+        </button>
+
+        <button class="btn btn-success" (click)="createPersonel()">
+          <i class="fa-solid fa-user-plus me-3"></i>
+          Add Personel
+        </button>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-3" *ngFor="let personel of personels$">
+        <div class="card" style="width: 100%">
+          <img
+            [src]="
+              personel.photo
+                ? personel.photo
+                : '../../../assets/images/person.jpg'
+            "
+            class="card-img-top"
+            alt="Profile"
+            height="200px"
+          />
+          <div class="card-body">
+            <h5 class="card-title">{{ personel.name }}</h5>
+            <p class="card-text">
+              {{ personel.position }}
+            </p>
+            <button
+              class="btn btn-primary"
+              (click)="copyToClipboard(personel.contact)"
+            >
+              <i class="fa-solid fa-copy me-3"></i>
+              {{ personel.contact }}
+            </button>
+            <h5>
+              <span class="badge text-bg-primary"> </span>
+            </h5>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,149 @@
+<div class="container-fluid p-3">
+  <div class="d-flex p-3 align-items-center justify-content-between">
+    <form>
+      <div class="col-xs-5 col-sm-auto">
+        <input
+          id="table-complete-search"
+          type="text"
+          placeholder="Searh here..."
+          class="form-control search-input"
+          name="searchTerm"
+          [(ngModel)]="incidentService.searchTerm"
+        />
+        <span *ngIf="incidentService.loading$ | async">Loading...</span>
+      </div>
+    </form>
+
+    <div class="d-flex gap-3">
+      <button class="btn btn-primary" (click)="refresh()">
+        <i class="fa-solid fa-arrows-rotate"></i>
+      </button>
+      <button class="btn btn-outline-secondary">
+        <i class="fa-solid fa-file-arrow-down me-3"></i>
+        Download Incidents
+      </button>
+    </div>
+  </div>
+
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th scope="col" sortable="id" (sort)="onSort($event)">ID</th>
+        <th scope="col" sortable="reporter" (sort)="onSort($event)">
+          Reporter
+        </th>
+        <th scope="col" sortable="location" (sort)="onSort($event)">
+          Location
+        </th>
+        <th scope="col" sortable="location" (sort)="onSort($event)">
+          Category
+        </th>
+        <th scope="col" sortable="description" (sort)="onSort($event)">
+          Description
+        </th>
+        <th scope="col" sortable="severity" (sort)="onSort($event)">
+          Severity
+        </th>
+        <th scope="col" sortable="status" (sort)="onSort($event)">Status</th>
+        <th scope="col" sortable="respondents">Respondents</th>
+        <th scope="col" sortable="incident_date" (sort)="onSort($event)">
+          Report Date
+        </th>
+        <th scope="col" sortable="incident_date" (sort)="onSort($event)">
+          Actions
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let incident of incidentService.incidents$ | async">
+        <th scope="row">
+          {{ incident.id }}
+        </th>
+        <td>
+          <span>
+            <ngb-highlight
+              [result]="incident.reporter.fullname"
+              [term]="incidentService.searchTerm"
+            ></ngb-highlight>
+            <br />
+            {{ incident.reporter.contact }}</span
+          >
+        </td>
+        <td>
+          <ngb-highlight
+            [result]="incident.location"
+            [term]="incidentService.searchTerm"
+          />
+        </td>
+        <td>
+          <ngb-highlight
+            [result]="incident.type"
+            [term]="incidentService.searchTerm"
+          />
+        </td>
+        <td>
+          <ngb-highlight
+            [result]="incident.description"
+            [term]="incidentService.searchTerm"
+          />
+        </td>
+        <td>
+          <h5>
+            <span
+              class="badge text-dark"
+              [style.backgroundColor]="getSeverityColor(incident.severity)"
+            >
+              {{ incident.severity.toLocaleLowerCase() }}</span
+            >
+          </h5>
+        </td>
+        <td>{{ incident.status.toLocaleLowerCase() }}</td>
+        <td>{{ incident.respondents?.length ?? 0 }}</td>
+
+        <td>{{ incident.incident_date }}</td>
+        <td>
+          <div class="d-flex gap-1">
+            <button
+              class="btn btn-outline-secondary"
+              data-bs-toggle="tooltip"
+              data-bs-placement="top"
+              data-bs-title="Tooltip on top"
+            >
+              <i class="fa-solid fa-user-group"></i>
+            </button>
+            <button class="btn btn-success">
+              <i class="fa-solid fa-eye"></i>
+            </button>
+
+            <button class="btn btn-primary">
+              <i class="fa-solid fa-pen"></i>
+            </button>
+          </div>
+        </td>
+      </tr>
+      <tr *ngIf="(incidentService.incidents$ | async)?.length === 0">
+        <td colspan="10z" style="text-align: center">No incidents found</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="d-flex justify-content-between p-2">
+    <ngb-pagination
+      [collectionSize]="(incidentService.total$ | async)!"
+      [(page)]="incidentService.page"
+      [pageSize]="incidentService.pageSize"
+    >
+    </ngb-pagination>
+
+    <select
+      class="form-select"
+      style="width: auto"
+      name="pageSize"
+      [(ngModel)]="incidentService.pageSize"
+    >
+      <option [ngValue]="10">10 items per page</option>
+      <option [ngValue]="20">20 items per page</option>
+      <option [ngValue]="50">50 items per page</option>
+    </select>
+  </div>
+</div>

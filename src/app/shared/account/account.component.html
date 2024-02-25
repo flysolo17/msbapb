@@ -1,0 +1,54 @@
+<div class="d-flex align-items-center justify-content-center h-100">
+  <div class="card" style="width: 30%">
+    <img
+      [src]="
+        administrator$?.photo
+          ? administrator$?.photo
+          : '../../../assets/images/person.jpg'
+      "
+      class="card-img-top"
+      alt="person"
+      height="250px"
+    />
+    <div class="card-body">
+      <div class="d-flex justify-content-between">
+        <h5 class="card-title">{{ administrator$?.name }}</h5>
+        <button class="btn btn-success btn-sm">
+          <i class="fa-solid fa-user-pen"></i>
+        </button>
+      </div>
+
+      <p class="text-secondary">{{ administrator$?.email }}</p>
+      <ul class="list-group list-group-flush">
+        <li
+          class="list-group-item d-flex align-items-center justify-content-between"
+        >
+          <span class="text-secondary">Office</span>
+
+          <span class="fw-bold"> {{ administrator$?.office }}</span>
+        </li>
+        <li
+          class="list-group-item d-flex align-items-center justify-content-between"
+        >
+          <span class="text-secondary">Contacts</span>
+          <div class="d-flex gap-1">
+            <button class="btn btn-light btn-sm">
+              <i class="fa-solid fa-plus"></i>
+            </button>
+          </div>
+        </li>
+        <li
+          class="list-group-item d-flex align-items-center justify-content-between"
+        >
+          <span class="text-secondary">Locations</span>
+          <div class="d-flex gap-1">
+            <button class="btn btn-light btn-sm">
+              <i class="fa-solid fa-plus"></i>
+            </button>
+          </div>
+        </li>
+      </ul>
+      <button class="btn btn-primary" (click)="logout()">Logout</button>
+    </div>
+  </div>
+</div>
