@@ -15,6 +15,7 @@ import { PersonelsService } from 'src/app/services/personels.service';
 export class PersonelsComponent {
   administrator$: Administrator | null = null;
   personels$: Personels[] = [];
+  toggleValue = false;
   private modalService$ = inject(NgbModal);
   constructor(
     private authService: AuthService,
@@ -55,6 +56,18 @@ export class PersonelsComponent {
       this.personelService.setPersonels(
         data.filter((e) => e.type === userType)
       );
+    });
+  }
+  updatePersonelStatus(id: number, active: number) {
+    let status = active === 0 ? 1 : 0;
+    this.personelService.updatePersonelStatus(id, status).subscribe({
+      next: (data) => {
+        this.toastr.success(data.message);
+      },
+      error: (err) => {
+        this.toastr.error(err.toString());
+      },
+      complete: () => this.refresh(),
     });
   }
 }

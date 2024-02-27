@@ -1,0 +1,52 @@
+<div class="modal-header bg-success">
+  <h4 class="modal-title text-white">Add Personnel</h4>
+  <button
+    type="button"
+    class="btn-close"
+    aria-label="Close"
+    (click)="activeModal.dismiss('Cross click')"
+  ></button>
+</div>
+
+<div class="modal-body">
+  <ul class="list-group">
+    <li class="list-group-item" *ngFor="let personel of personels$">
+      <div class="d-flex gap-3">
+        <input
+          #personelCheckbox
+          class="form-check-input me-1"
+          type="checkbox"
+          [value]="personel.id"
+          [id]="personel.id"
+        />
+        <div class="d-flex p-2 gap-3">
+          <img
+            class="rounded"
+            [src]="
+              personel.photo
+                ? personel.photo
+                : '../../../assets/images/person.jpg'
+            "
+            width="50px"
+            height="50px"
+          />
+
+          <label class="form-check-label stretched-link" [for]="personel.id">
+            {{ personel.name }} <br />
+            <span class="text-secondary">{{ personel.contact }}</span>
+          </label>
+        </div>
+      </div>
+    </li>
+  </ul>
+</div>
+
+<div class="modal-footer">
+  <button
+    class="btn btn-outline-secondary"
+    (click)="activeModal.dismiss('Cross click')"
+  >
+    Close
+  </button>
+  <button class="btn btn-success" (click)="submitPersonels()">Submit</button>
+</div>

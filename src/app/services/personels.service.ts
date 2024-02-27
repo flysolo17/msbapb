@@ -46,4 +46,13 @@ export class PersonelsService {
       form
     );
   }
+  updatePersonelStatus(id: number, active: number) {
+    let form = new FormData();
+    form.append('id', id.toString());
+    form.append('active', active.toString());
+    return this.http.post<ResponseData<null>>(
+      this.url$ + 'update_personel_status.php',
+      form
+    );
+  }
 }

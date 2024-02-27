@@ -13,6 +13,8 @@ import {
 } from 'rxjs';
 import { SortColumn, SortDirection } from './sortable.directive';
 import { DecimalPipe } from '@angular/common';
+import { RespondentData } from '../models/RespondentData';
+import { ResponseData } from '../models/ResponseData';
 interface SearchResult {
   countries: Incidents[];
   total: number;
@@ -104,6 +106,27 @@ export class IncidentsService {
   }
   setIncidents(incident: Incidents[]) {
     this._incidents$.next(incident);
+  }
+
+  addRespondents(data: RespondentData[]) {
+    let requestBody = {
+      incidents: data,
+    };
+
+    return this.http.post<ResponseData<null>>(
+      this.url$ + 'add_respondents.php',
+      requestBody
+    );
+  }
+
+  updateIncidentStatus(id: number, status: number) {
+    let form = new FormData();
+    form.append('id', id.toString());
+    form.append('status', status.toString());
+    return this.http.post<ResponseData<null>>(
+      this.url$ + 'update_incident_status.php',
+      form
+    );
   }
 
   get incidents$() {

@@ -27,7 +27,23 @@
             height="200px"
           />
           <div class="card-body">
-            <h5 class="card-title">{{ personel.name }}</h5>
+            <div class="d-flex align-items-center justify-content-between">
+              <h5 class="card-title">{{ personel.name }}</h5>
+
+              <div
+                class="form-check form-switch"
+                (click)="updatePersonelStatus(personel.id, personel.active)"
+              >
+                <input
+                  class="form-check-input"
+                  type="checkbox"
+                  role="switch"
+                  id="flexSwitchCheckDefault"
+                  [checked]="personel.active"
+                />
+              </div>
+            </div>
+
             <p class="card-text">
               {{ personel.position }}
             </p>
@@ -38,9 +54,6 @@
               <i class="fa-solid fa-copy me-3"></i>
               {{ personel.contact }}
             </button>
-            <h5>
-              <span class="badge text-bg-primary"> </span>
-            </h5>
           </div>
         </div>
       </div>

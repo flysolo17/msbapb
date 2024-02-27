@@ -21,6 +21,7 @@ import { NgbdSortableHeader } from './services/sortable.directive';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CreatePersonelComponent } from './dialogs/create-personel/create-personel.component';
 import { LoginComponent } from './dialogs/login/login.component';
+import { AddRespondentsComponent } from './dialogs/add-respondents/add-respondents.component';
 
 @NgModule({
   declarations: [
@@ -32,6 +33,7 @@ import { LoginComponent } from './dialogs/login/login.component';
     AccountComponent,
     CreatePersonelComponent,
     LoginComponent,
+    AddRespondentsComponent,
   ],
   imports: [
     BrowserModule,

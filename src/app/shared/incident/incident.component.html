@@ -98,7 +98,7 @@
           </h5>
         </td>
         <td>{{ incident.status.toLocaleLowerCase() }}</td>
-        <td>{{ incident.respondents?.length ?? 0 }}</td>
+        <td>{{ incident.respondents ?? "---" }}</td>
 
         <td>{{ incident.incident_date }}</td>
         <td>
@@ -107,6 +107,7 @@
               class="btn btn-outline-secondary"
               data-bs-toggle="tooltip"
               data-bs-placement="top"
+              (click)="addRespondents(incident.id, incident.respondents)"
               data-bs-title="Tooltip on top"
             >
               <i class="fa-solid fa-user-group"></i>
@@ -115,9 +116,28 @@
               <i class="fa-solid fa-eye"></i>
             </button>
 
-            <button class="btn btn-primary">
-              <i class="fa-solid fa-pen"></i>
-            </button>
+            <div class="d-inline-block" ngbDropdown #myDrop="ngbDropdown">
+              <button
+                type="button"
+                class="btn btn-primary"
+                id="dropdownManual"
+                ngbDropdownAnchor
+                (focus)="myDrop.open()"
+              >
+                <i class="fa-solid fa-pen"></i>
+              </button>
+              <div ngbDropdownMenu aria-labelledby="dropdownManual">
+                <button ngbDropdownItem (click)="updateStatus(incident.id, 1)">
+                  Open
+                </button>
+                <button ngbDropdownItem (click)="updateStatus(incident.id, 2)">
+                  Under Investigation
+                </button>
+                <button ngbDropdownItem (click)="updateStatus(incident.id, 3)">
+                  Closed
+                </button>
+              </div>
+            </div>
           </div>
         </td>
       </tr>

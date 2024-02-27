@@ -5,6 +5,7 @@ export interface Personels {
   position: string | null;
   type: string;
   contact: string;
+  active: number;
 }
 
 const storage = 'http://localhost/msbapb/api/uploads/';
@@ -14,8 +15,8 @@ export const PersonelsConverter = {
     return JSON.stringify(person);
   },
   fromJson: (json: any): Personels => {
-    const { id, name, photo, position, type, contact } = json;
+    const { id, name, photo, position, type, contact, active } = json;
     const image = photo ? storage + photo : null;
-    return { id, name, photo: image, position, type, contact };
+    return { id, name, photo: image, position, type, contact, active };
   },
 };

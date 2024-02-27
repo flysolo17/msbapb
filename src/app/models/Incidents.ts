@@ -6,11 +6,11 @@ export interface Incidents {
   location: string;
   type: string;
   description: string;
-  name: string;
+
   severity: string;
   incident_date: string;
   reporter: Reporter;
-  respondents: string[] | null;
+  respondents: string | null;
 }
 
 export const IncidentConverter = {
@@ -24,7 +24,6 @@ export const IncidentConverter = {
       location: json.location,
       type: json.type,
       description: json.description,
-      name: json.name,
       severity: json.severity,
       incident_date: json.incident_date,
       respondents: json.respondents,
