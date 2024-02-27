@@ -19,16 +19,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
     exit();
 }
 
-$conn = new mysqli($host, $username, $password, $database,$port);
+// Establish database connection
+$conn = new mysqli($host, $username, $password, $database, $port);
 
-
+// Check connection
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
-
+// Set charset
 $conn->set_charset("utf8mb4");
-
-
-
 ?>

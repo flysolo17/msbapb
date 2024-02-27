@@ -8,7 +8,8 @@ $sql = "SELECT
     p.photo,
     p.position,
     pt.name AS type,
-    CAST(p.contact AS CHAR) AS contact
+    CAST(p.contact AS CHAR) AS contact,
+    p.active
 FROM `personels` as p
 JOIN `personel_type` AS pt ON pt.id = p.type;";
 
@@ -18,11 +19,15 @@ if (!$result) {
 } else {
     $rows = array();
     while($row = $result->fetch_assoc()) {
+        // Convert id and active fields to integers
+        $row['id'] = (int)$row['id'];
+        $row['active'] = (int)$row['active'];
         $rows[] = $row;
     }
     echo json_encode($rows);
 }
 
 $conn->close();
+
 
 ?>

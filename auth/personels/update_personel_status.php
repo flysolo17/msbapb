@@ -1,21 +1,26 @@
 
 
+
+
+
+
 <?php
-require_once '../config/connection.php';
-require_once '../data/response.php';
+
+
+require_once '../../config/connection.php';
+require_once '../../data/response.php';
 
 // Check if the required parameters are provided
-if (!isset($_POST['id']) || !isset($_POST['status'])) {
+if (!isset($_POST['id']) || !isset($_POST['active'])) {
     $response = new Response(false, "Missing required parameters.");
     echo $response;
     exit;
 }
 
-$incidentId = $_POST['id']; 
-$status = $_POST['status'];
+$personeID = $_POST['id']; 
+$status = $_POST['active'];
 
-
-$query = "UPDATE incidents SET status = ? WHERE id = ?";
+$query = "UPDATE personels SET active = ? WHERE id = ?";
 $stmt = mysqli_prepare($conn, $query);
 
 if (!$stmt) {
@@ -24,7 +29,7 @@ if (!$stmt) {
     exit;
 }
 
-mysqli_stmt_bind_param($stmt, 'ii', $status, $incidentId);
+mysqli_stmt_bind_param($stmt, 'ii', $status, $personeID);
 
 
 if (!mysqli_stmt_execute($stmt)) {
@@ -35,14 +40,12 @@ if (!mysqli_stmt_execute($stmt)) {
 
 // Check if any rows were affected
 if (mysqli_stmt_affected_rows($stmt) > 0) {
-    $response = new Response(true, "Incident status updated successfully.");
+    $response = new Response(true, "Personel status updated successfully.");
     echo $response;
 } else {
-    $response = new Response(false, "No incident found with the provided ID. " . $incidentId);
+    $response = new Response(false, "No Personel found with the provided ID. " . $personeID);
     echo $response;
 }
 
 mysqli_stmt_close($stmt);
-
-
 ?>

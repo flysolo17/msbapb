@@ -11,7 +11,6 @@ $sql = "SELECT
   i.location,
   i.type,
   i.description,
-  s.name,
   sv.name as severity,
   GROUP_CONCAT(p.name SEPARATOR ', ') AS respondents,
   i.incident_date
@@ -21,7 +20,7 @@ JOIN incident_status AS s ON s.id = i.status
 JOIN incident_severity AS sv ON sv.id = i.severity
 LEFT JOIN respondents r ON i.id = r.incident_id
 LEFT JOIN personels p ON r.respondent_id = p.id
-GROUP BY i.id, u.fullname, u.cp_number, u.email, i.location, i.type, i.description, s.name, sv.name, i.incident_date
+GROUP BY i.id, u.fullname, u.cp_number, u.email, i.location, i.type, i.description, sv.name, i.incident_date
 ORDER BY i.incident_date DESC;"
 ;
 
