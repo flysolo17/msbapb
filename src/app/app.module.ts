@@ -23,6 +23,16 @@ import { CreatePersonelComponent } from './dialogs/create-personel/create-person
 import { LoginComponent } from './dialogs/login/login.component';
 import { AddRespondentsComponent } from './dialogs/add-respondents/add-respondents.component';
 
+import { ResetPasswordComponent } from './reset-password/reset-password.component';
+import { BarangaysComponent } from './shared/barangays/barangays.component';
+import { CreateBarangayComponent } from './dialogs/create-barangay/create-barangay.component';
+import { UpdateBarangayComponent } from './dialogs/update-barangay/update-barangay.component';
+import { CreateNewsComponent } from './dialogs/create-news/create-news.component';
+import { UpdatePersonelComponent } from './dialogs/update-personel/update-personel.component';
+import { ViewIncidentsComponent } from './dialogs/view-incidents/view-incidents.component';
+import { AddLocationsComponent } from './dialogs/add-locations/add-locations.component';
+import { EditProfileComponent } from './dialogs/edit-profile/edit-profile.component';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -33,15 +43,25 @@ import { AddRespondentsComponent } from './dialogs/add-respondents/add-responden
     AccountComponent,
     CreatePersonelComponent,
     LoginComponent,
+
     AddRespondentsComponent,
+    ResetPasswordComponent,
+    BarangaysComponent,
+    CreateBarangayComponent,
+    UpdateBarangayComponent,
+    CreateNewsComponent,
+    UpdatePersonelComponent,
+    ViewIncidentsComponent,
+    AddLocationsComponent,
+    EditProfileComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    NgbModule,
     CommonModule,
     HttpClientModule,
     AuthModule,
+    NgbModule,
     NgbdSortableHeader,
     PnpModule,
     BfpModule,

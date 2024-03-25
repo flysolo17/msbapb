@@ -69,7 +69,7 @@ function matches(incident: Incidents, term: string) {
   providedIn: 'root',
 })
 export class IncidentsService {
-  url$ = 'http://localhost/msbapb/api/reports/';
+  url$ = 'https://danica.msbapb.com/api/reports/';
 
   private _loading$ = new BehaviorSubject<boolean>(true);
   private _search$ = new Subject<void>();

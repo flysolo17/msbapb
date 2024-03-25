@@ -14,7 +14,14 @@ import { PersonelsService } from 'src/app/services/personels.service';
 export class BfpMainComponent {
   links = [
     { title: 'Dashboard', fragment: 'dashboard', icon: 'fa-solid fa-house' },
+    { title: 'News', fragment: 'news', icon: 'fa-solid fa-newspaper' },
+    {
+      title: 'Barangays ',
+      fragment: 'barangays',
+      icon: 'fa-solid fa-building',
+    },
     { title: 'Incidents', fragment: 'incidents', icon: 'fa-solid fa-folder' },
+
     {
       title: 'Personels',
       fragment: 'personels',

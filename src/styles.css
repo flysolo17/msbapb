@@ -3,6 +3,7 @@
 html body {
   margin: 0;
   padding: 0;
+  background-color: var(--bg-color);
   font-family: "Poppins", sans-serif;
 }
 
@@ -18,4 +19,24 @@ html body {
   max-width: 400px;
   background-color: var(--bg-color);
   outline: none;
+}
+.search-input2 {
+  border: none;
+  border-radius: 10px;
+  padding: 10px;
+
+  background-color: var(--bg-color);
+  outline: none;
+}
+
+.filled-card {
+  background-color: #f8f9fa; /* Change to desired background color */
+  border-radius: 10px;
+  margin: 1rem;
+  padding: 20px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0, 0, 0, 0.08);
+}
+
+.circular-image {
+  border-radius: 50%; /* Make the image circular */
 }

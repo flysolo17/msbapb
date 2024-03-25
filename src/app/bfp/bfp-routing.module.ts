@@ -5,10 +5,13 @@ import { IncidentComponent } from '../shared/incident/incident.component';
 import { PersonelsComponent } from '../shared/personels/personels.component';
 import { NewsComponent } from '../shared/news/news.component';
 import { AccountComponent } from '../shared/account/account.component';
+import { BarangaysComponent } from '../shared/barangays/barangays.component';
 
 const routes: Routes = [
   { path: '', component: DashboardComponent },
   { path: 'dashboard', component: DashboardComponent },
+  { path: 'news', component: NewsComponent },
+  { path: 'barangays', component: BarangaysComponent },
   { path: 'incidents', component: IncidentComponent },
   { path: 'personels', component: PersonelsComponent },
   { path: 'news', component: NewsComponent },

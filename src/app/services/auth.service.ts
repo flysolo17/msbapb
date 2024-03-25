@@ -1,15 +1,27 @@
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import {
+  HttpClient,
+  HttpErrorResponse,
+  HttpHeaders,
+} from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { ResponseData } from '../models/ResponseData';
 import { Administrator, AdministratorConverter } from '../models/Administrator';
-import { BehaviorSubject, Observable, catchError, map, throwError } from 'rxjs';
+import {
+  BehaviorSubject,
+  Observable,
+  catchError,
+  map,
+  tap,
+  throwError,
+} from 'rxjs';
 import { ToastrService } from 'ngx-toastr';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
-  private readonly url$ = 'http://localhost/msbapb/api/admin/';
+  private readonly url$ = 'https://danica.msbapb.com/api/admin/';
+
   private usersSubject: BehaviorSubject<Administrator | null> =
     new BehaviorSubject<Administrator | null>(null);
   public users$: Observable<Administrator | null> =
@@ -28,35 +40,45 @@ export class AuthService {
   setAdmin(admin: Administrator) {
     this.usersSubject.next(admin);
   }
+
   login(email: string, password: string) {
-    const formData = new FormData();
-    formData.append('email', email);
-    formData.append('password', password);
+    const body = new FormData();
+    body.append('email', email);
+    body.append('password', password);
     this.http
-      .post<ResponseData<Administrator>>(
-        this.url$ + 'login_as_admin.php',
-        formData
-      )
-      .pipe(
-        catchError((error: HttpErrorResponse) => {
-          this.toastr.error(error.error.message.toString());
-          return throwError(error);
-        })
-      )
-      .subscribe((data) => {
-        if (data.status) {
-          this.toastr.success(data.message);
-          let admin: Administrator = data.data;
-          localStorage.setItem('user', AdministratorConverter.toJson(admin));
-          this.setAdmin(admin);
-        } else {
-          this.toastr.error(data.message.toString());
-        }
-        (error: any) => {
-          this.toastr.error(error.toString());
-        };
+      .post<ResponseData<Administrator>>(this.url$ + 'login_as_admin.php', body)
+      .subscribe({
+        next: (value: any) => {
+          console.log(value);
+          if (value.status) {
+            this.toastr.success(value.message);
+            let admin: Administrator = value.data;
+            localStorage.setItem('user', AdministratorConverter.toJson(admin));
+            this.setAdmin(AdministratorConverter.fromJson(admin));
+          } else {
+            this.toastr.error(value.toString());
+          }
+        },
+        error: (err) => {
+          this.toastr.error(err.message.toString());
+        },
       });
   }
+
+  updateProfile(id: number, photo: File | null, name: string, office: string) {
+    let form = new FormData();
+    if (photo !== null) {
+      form.append('photo', photo, photo.name);
+    }
+    form.append('id', id.toString());
+    form.append('name', name);
+    form.append('office', office);
+    return this.http.post<ResponseData<Administrator>>(
+      this.url$ + 'edit_profile.php',
+      form
+    );
+  }
+
   logout() {
     localStorage.clear();
     this.usersSubject.next(null);

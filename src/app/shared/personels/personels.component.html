@@ -1,35 +1,73 @@
 <div class="container-fluid">
-  <div class="d-flex flex-column gap-3 p-3">
-    <div class="d-flex align-items-center justify-content-between">
-      <h5 class="text-primary">Personels</h5>
-      <div class="d-flex gap-3">
-        <button class="btn btn-primary" (click)="refresh()">
-          <i class="fa-solid fa-arrows-rotate"></i>
-        </button>
+  <div class="filled-card">
+    <div class="d-flex flex-column gap-3 p-3">
+      <div class="d-flex align-items-center justify-content-between">
+        <h5 class="text-primary">
+          {{ administrator$?.type === 1 ? "BFP" : "PNP" }} Personels
+        </h5>
+        <div class="d-flex gap-3">
+          <button class="btn btn-primary" (click)="refresh()">
+            <i class="fa-solid fa-arrows-rotate"></i>
+          </button>
 
-        <button class="btn btn-success" (click)="createPersonel()">
-          <i class="fa-solid fa-user-plus me-3"></i>
-          Add Personel
-        </button>
+          <button class="btn btn-success" (click)="createPersonel()">
+            <i class="fa-solid fa-user-plus me-3"></i>
+            Add Personel
+          </button>
+        </div>
       </div>
-    </div>
-    <div class="row">
-      <div class="col-3" *ngFor="let personel of personels$">
-        <div class="card" style="width: 100%">
-          <img
-            [src]="
-              personel.photo
-                ? personel.photo
-                : '../../../assets/images/person.jpg'
-            "
-            class="card-img-top"
-            alt="Profile"
-            height="200px"
-          />
-          <div class="card-body">
-            <div class="d-flex align-items-center justify-content-between">
-              <h5 class="card-title">{{ personel.name }}</h5>
 
+      <input
+        id="table-complete-search"
+        type="text"
+        placeholder="Searh here..."
+        class="form-control search-input2 w-100"
+        name="searchTerm"
+        [(ngModel)]="searching"
+        (keyup)="filterPersonels()"
+      />
+
+      <table class="table table-borderless table-hover">
+        <thead>
+          <tr>
+            <th scope="col">Profile</th>
+            <th scope="col">Fullname</th>
+            <th scope="col">Position</th>
+            <th scope="col">Contact</th>
+            <th scope="col">On Duty ?</th>
+            <th scope="col">Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let personel of filteredPersonels$">
+            <th scope="row">
+              <!-- <img src="../../../assets/images/person.jpg" class="rounded" alt="..." /> -->
+              <img
+                [src]="personel.photo ?? '../../../assets/images/person.jpg'"
+                class="rounded"
+                alt="Photo"
+                width="40px"
+                height="40px"
+              />
+            </th>
+            <td>{{ personel.name }}</td>
+            <td>{{ personel.position }}</td>
+            <td>
+              {{ personel.contact }}
+              <button
+                class="btn btn-primary"
+                (click)="copyToClipboard(personel.contact)"
+              >
+                <i class="fa-solid fa-copy"></i>
+              </button>
+            </td>
+            <td>
+              <span class="badge text-bg-success" *ngIf="personel.active"
+                >Active</span
+              >
+              <span class="badge text-bg-danger" *ngIf="!personel.active"
+                >Not Active</span
+              >
               <div
                 class="form-check form-switch"
                 (click)="updatePersonelStatus(personel.id, personel.active)"
@@ -42,21 +80,26 @@
                   [checked]="personel.active"
                 />
               </div>
-            </div>
-
-            <p class="card-text">
-              {{ personel.position }}
-            </p>
-            <button
-              class="btn btn-primary"
-              (click)="copyToClipboard(personel.contact)"
-            >
-              <i class="fa-solid fa-copy me-3"></i>
-              {{ personel.contact }}
-            </button>
-          </div>
-        </div>
-      </div>
+            </td>
+            <td>
+              <div class="d-flex gap-3">
+                <button
+                  class="btn btn-primary"
+                  (click)="updatePersonel(personel)"
+                >
+                  <i class="fa-solid fa-user-pen"></i>
+                </button>
+                <button
+                  class="btn btn-danger"
+                  (click)="deletePersonel(personel.id)"
+                >
+                  <i class="fa-solid fa-user-xmark"></i>
+                </button>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
     </div>
   </div>
 </div>

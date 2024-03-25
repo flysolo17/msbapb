@@ -1,12 +1,15 @@
 import { Component, QueryList, ViewChildren, inject } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrService } from 'ngx-toastr';
-import { Observable } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { AddRespondentsComponent } from 'src/app/dialogs/add-respondents/add-respondents.component';
+import { ViewIncidentsComponent } from 'src/app/dialogs/view-incidents/view-incidents.component';
+import { Administrator } from 'src/app/models/Administrator';
 import { Incidents } from 'src/app/models/Incidents';
 import { RespondentData } from 'src/app/models/RespondentData';
 import { AuthService } from 'src/app/services/auth.service';
 import { IncidentsService } from 'src/app/services/incidents.service';
+import { PrintingService } from 'src/app/services/printing.service';
 import {
   NgbdSortableHeader,
   SortEvent,
@@ -21,15 +24,21 @@ export class IncidentComponent {
   incidents$: Observable<Incidents[]>;
   total$: Observable<number>;
   private modalService$ = inject(NgbModal);
+  administrator$: Administrator | null = null;
   @ViewChildren(NgbdSortableHeader) headers: QueryList<NgbdSortableHeader>;
   constructor(
     private authService: AuthService,
     public incidentService: IncidentsService,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    private printing: PrintingService
   ) {
+    authService.users$.subscribe((data) => {
+      this.administrator$ = data;
+    });
     this.headers = new QueryList<NgbdSortableHeader>();
     this.incidents$ = incidentService.incidents$;
     this.total$ = incidentService.total$;
+    this.refresh();
   }
 
   onSort({ column, direction }: SortEvent) {
@@ -117,5 +126,37 @@ export class IncidentComponent {
       default:
         return 1; // Default value if status is not recognized
     }
+  }
+  async print() {
+    let subscription: Subscription | undefined;
+
+    try {
+      subscription = this.incidents$.subscribe((incidents: Incidents[]) => {
+        if (this.administrator$) {
+          this.printing.downloadPDF(this.administrator$.name ?? '', incidents);
+        } else {
+          // Handle case when administrator$ is undefined
+          throw new Error('Administrator not found.');
+        }
+      });
+    } catch (e) {
+      if (e instanceof Error) {
+        this.toastr.error(e.message.toString());
+      } else {
+        // Handle case when 'e' is not an instance of Error
+        this.toastr.error('An unknown error occurred.');
+      }
+    } finally {
+      if (subscription) {
+        subscription.unsubscribe();
+      }
+    }
+  }
+
+  viewIncident(incident: Incidents) {
+    const modal = this.modalService$.open(ViewIncidentsComponent, {
+      size: 'lg',
+    });
+    modal.componentInstance.incident = incident;
   }
 }

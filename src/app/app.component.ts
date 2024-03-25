@@ -10,8 +10,7 @@ import { Administrator, AdministratorConverter } from './models/Administrator';
 })
 export class AppComponent implements OnInit {
   title = 'msbapb-web';
-  constructor(private authService: AuthService, private router: Router) {}
-  ngOnInit(): void {
+  constructor(private authService: AuthService, private router: Router) {
     this.authService.users$.subscribe((data) => {
       if (data) {
         if (data.type === 2) {
@@ -21,7 +20,10 @@ export class AppComponent implements OnInit {
         } else {
           this.router.navigate(['/auth']);
         }
+      } else {
+        this.router.navigate(['/auth']);
       }
     });
   }
+  ngOnInit(): void {}
 }

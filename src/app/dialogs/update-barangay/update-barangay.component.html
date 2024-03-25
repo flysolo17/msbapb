@@ -1,0 +1,61 @@
+<div class="modal-header bg-primary">
+  <h4 class="modal-title text-white">Update Barangay</h4>
+  <button
+    type="button"
+    class="btn-close text-white"
+    aria-label="Close"
+    (click)="activeModal.dismiss(false)"
+  ></button>
+</div>
+
+<div class="modal-body">
+  <form [formGroup]="barangayForm$" (submit)="onSubmit()">
+    <div class="form-floating mb-3">
+      <input
+        type="text"
+        class="form-control"
+        id="barangay"
+        formControlName="barangay"
+      />
+      <label for="barangay" class="form-label">Barangay</label>
+      <div
+        *ngIf="
+          barangayForm$.get('barangay')?.invalid &&
+          barangayForm$.get('barangay')?.touched
+        "
+        class="text-danger"
+      >
+        Barangay is required
+      </div>
+    </div>
+
+    <div class="form-floating mb-3">
+      <input
+        type="text"
+        class="form-control"
+        id="hotline"
+        formControlName="hotline"
+      />
+      <label for="hotline" class="form-label">Hotline</label>
+      <div
+        *ngIf="
+          barangayForm$.get('hotline')?.invalid &&
+          barangayForm$.get('hotline')?.touched
+        "
+        class="text-danger"
+      >
+        Hotline is required
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button
+        type="button"
+        class="btn btn-outline-dark"
+        (click)="activeModal.close('Close click')"
+      >
+        Cancel
+      </button>
+      <button type="submit" class="btn btn-primary">Submit</button>
+    </div>
+  </form>
+</div>

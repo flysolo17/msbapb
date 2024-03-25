@@ -2,6 +2,7 @@ import { Component, inject } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrService } from 'ngx-toastr';
 import { CreatePersonelComponent } from 'src/app/dialogs/create-personel/create-personel.component';
+import { UpdatePersonelComponent } from 'src/app/dialogs/update-personel/update-personel.component';
 import { Administrator } from 'src/app/models/Administrator';
 import { Personels } from 'src/app/models/Personels';
 import { AuthService } from 'src/app/services/auth.service';
@@ -15,6 +16,8 @@ import { PersonelsService } from 'src/app/services/personels.service';
 export class PersonelsComponent {
   administrator$: Administrator | null = null;
   personels$: Personels[] = [];
+  filteredPersonels$: Personels[] = [];
+  searching: string = '';
   toggleValue = false;
   private modalService$ = inject(NgbModal);
   constructor(
@@ -27,9 +30,15 @@ export class PersonelsComponent {
     });
     personelService.personels$.subscribe((data) => {
       this.personels$ = data;
+      this.filteredPersonels$ = data;
     });
   }
 
+  filterPersonels() {
+    this.filteredPersonels$ = this.personels$.filter((personel) =>
+      personel.name.toLowerCase().includes(this.searching.toLowerCase())
+    );
+  }
   copyToClipboard(text: string) {
     let selBox = document.createElement('textarea');
     selBox.style.position = 'fixed';
@@ -50,6 +59,18 @@ export class PersonelsComponent {
     const modalRef = this.modalService$.open(CreatePersonelComponent);
     modalRef.componentInstance.type = this.administrator$?.type;
   }
+
+  updatePersonel(personel: Personels) {
+    const modalRef = this.modalService$.open(UpdatePersonelComponent);
+    modalRef.componentInstance.personel = personel;
+    modalRef.result.then((data) => {
+      if (data) {
+        this.refresh();
+      } else {
+        this.toastr.warning('Updating personel canncelled');
+      }
+    });
+  }
   refresh() {
     this.personelService.getAllPersonels().subscribe((data) => {
       let userType = this.administrator$?.type === 2 ? 'PNP' : 'BFP';
@@ -66,6 +87,22 @@ export class PersonelsComponent {
       },
       error: (err) => {
         this.toastr.error(err.toString());
+      },
+      complete: () => this.refresh(),
+    });
+  }
+  deletePersonel(id: number) {
+    this.personelService.deletePersonel(id).subscribe({
+      next: (data) => {
+        if (data.status) {
+          this.toastr.success(data.message);
+        } else {
+          this.toastr.error(data.message);
+        }
+      },
+      error: (err) => {
+        this.toastr.error(err['message'].toString());
+        console.log(err);
       },
       complete: () => this.refresh(),
     });

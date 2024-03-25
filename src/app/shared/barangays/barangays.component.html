@@ -1,0 +1,64 @@
+<div class="container-fluid">
+  <div class="filled-card">
+    <div class="d-flex flex-column gap-1">
+      <div class="d-flex align-items-center justify-content-between p-3">
+        <h6 class="text-primary">Barangays & Hotlines</h6>
+        <button class="btn btn-success" (click)="createBarangay()">
+          <i class="fa-solid fa-plus me-3"></i>
+          Add Barangay
+        </button>
+      </div>
+      <input
+        id="table-complete-search"
+        type="text"
+        placeholder="Searh here..."
+        class="form-control search-input2 w-100"
+        name="searchTerm"
+        [(ngModel)]="searching"
+        (keyup)="filterBarangays()"
+      />
+      <table class="table table-borderless table-hover">
+        <thead>
+          <tr>
+            <th scope="col">ID</th>
+            <th scope="col">Barangay</th>
+            <th scope="col">Hotline</th>
+            <th scope="col">Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let barangay of filteredBarangays$">
+            <td>{{ barangay.id }}</td>
+            <td>{{ barangay.barangay }}</td>
+            <td>
+              {{ barangay.hotline }}
+              <button
+                class="btn btn-primary"
+                (click)="copyToClipboard(barangay.hotline)"
+              >
+                <i class="fa-solid fa-copy"></i>
+              </button>
+            </td>
+
+            <td>
+              <div class="d-flex gap-3">
+                <button
+                  class="btn btn-primary"
+                  (click)="updateBarangay(barangay)"
+                >
+                  <i class="fa-solid fa-user-pen"></i>
+                </button>
+                <button
+                  class="btn btn-danger"
+                  (click)="deleteBarangay(barangay.id)"
+                >
+                  <i class="fa-solid fa-user-xmark"></i>
+                </button>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

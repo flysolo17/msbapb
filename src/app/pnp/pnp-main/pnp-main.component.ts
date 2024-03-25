@@ -14,6 +14,12 @@ import { PersonelsService } from 'src/app/services/personels.service';
 export class PnpMainComponent implements OnDestroy, OnInit {
   links = [
     { title: 'Dashboard', fragment: 'dashboard', icon: 'fa-solid fa-house' },
+    { title: 'News', fragment: 'news', icon: 'fa-solid fa-newspaper' },
+    {
+      title: 'Barangays ',
+      fragment: 'barangays',
+      icon: 'fa-solid fa-building',
+    },
     { title: 'Incidents', fragment: 'incidents', icon: 'fa-solid fa-folder' },
     {
       title: 'Personels',
@@ -27,6 +33,7 @@ export class PnpMainComponent implements OnDestroy, OnInit {
   constructor(
     public route: ActivatedRoute,
     private router: Router,
+
     private authService: AuthService,
     private incidentService: IncidentsService,
     private personelService: PersonelsService
@@ -51,6 +58,7 @@ export class PnpMainComponent implements OnDestroy, OnInit {
         this.personelService.setPersonels(
           data.filter((e) => e.type === userType)
         );
+
         console.log(data);
       });
   }

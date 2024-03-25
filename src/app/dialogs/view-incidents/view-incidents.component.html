@@ -1,0 +1,48 @@
+<div class="modal-header bg-dark">
+  <h4 class="modal-title text-white">Incident Report</h4>
+  <button
+    type="button"
+    class="btn-close"
+    aria-label="Close"
+    (click)="activeModal.dismiss(false)"
+  ></button>
+</div>
+
+<div class="modal-body">
+  <div class="d-flex gap-3">
+    <div class="p-3">
+      <h5>Incident Information</h5>
+      <p>
+        Location: <span class="text-dark">{{ incident.location }}</span>
+      </p>
+      <p>
+        Description: <span class="text-dark">{{ incident.description }}</span>
+      </p>
+      <p>
+        Status: <span class="text-dark">{{ incident.status }}</span>
+      </p>
+      <p>
+        Severity: <span class="text-dark">{{ incident.severity }}</span>
+      </p>
+      <p>
+        Date: <span class="text-dark">{{ incident.incident_date }}</span>
+      </p>
+      <hr />
+      <h5>Respondents</h5>
+      <p class="text-dark">{{ incident.respondents }}</p>
+    </div>
+
+    <div class="p-3">
+      <h5>Reporter</h5>
+      <p>
+        Name: <span class="text-dark">{{ incident.reporter.fullname }}</span>
+      </p>
+      <p>
+        Email: <span class="text-dark">{{ incident.reporter.email }}</span>
+      </p>
+      <p>
+        Contact: <span class="text-dark">{{ incident.reporter.contact }}</span>
+      </p>
+    </div>
+  </div>
+</div>

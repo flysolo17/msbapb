@@ -8,7 +8,7 @@ export interface Personels {
   active: number;
 }
 
-const storage = 'http://localhost/msbapb/api/uploads/';
+const storage = 'https://danica.msbapb.com/api/uploads/';
 
 export const PersonelsConverter = {
   toJson: (person: Personels): string => {

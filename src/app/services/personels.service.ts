@@ -8,7 +8,7 @@ import { ResponseData } from '../models/ResponseData';
   providedIn: 'root',
 })
 export class PersonelsService {
-  private readonly url$ = 'http://localhost/msbapb/api/auth/personels/';
+  private readonly url$ = 'https://danica.msbapb.com/api/auth/personels/';
   private personelSubject: BehaviorSubject<Personels[]> = new BehaviorSubject<
     Personels[]
   >([]);
@@ -53,6 +53,32 @@ export class PersonelsService {
     return this.http.post<ResponseData<null>>(
       this.url$ + 'update_personel_status.php',
       form
+    );
+  }
+
+  updatePersonel(
+    id: number,
+    photo: File | null,
+    name: string,
+    position: string,
+    contact: string
+  ) {
+    let form = new FormData();
+    if (photo !== null) {
+      form.append('photo', photo, photo.name);
+    }
+    form.append('id', id.toString());
+    form.append('name', name);
+    form.append('position', position);
+    form.append('contact', contact);
+    return this.http.post<ResponseData<null>>(
+      this.url$ + 'update_personel.php',
+      form
+    );
+  }
+  deletePersonel(id: number) {
+    return this.http.delete<ResponseData<null>>(
+      this.url$ + 'delete_personel.php?id=' + id
     );
   }
 }

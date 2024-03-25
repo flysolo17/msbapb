@@ -1,0 +1,68 @@
+<div class="modal-header bg-dark">
+  <h4 class="modal-title text-white">Update Profile</h4>
+  <button
+    type="button"
+    class="btn-close"
+    aria-label="Close"
+    (click)="activeModal.dismiss(false)"
+  ></button>
+</div>
+
+<div class="modal-body">
+  <form [formGroup]="adminForm$" (submit)="onSubmit()">
+    <div class="form-floating mb-3">
+      <input
+        type="file"
+        class="form-control"
+        id="photo"
+        (change)="onFileSelected($event)"
+      />
+      <label for="photo" class="form-label">Photo</label>
+    </div>
+    <div class="form-floating mb-3">
+      <input
+        type="text"
+        class="form-control"
+        id="name"
+        formControlName="name"
+      />
+      <label for="name" class="form-label">Fullname</label>
+      <div
+        *ngIf="
+          adminForm$.get('name')?.invalid && adminForm$.get('name')?.touched
+        "
+        class="text-danger"
+      >
+        Fullname is required
+      </div>
+    </div>
+    <div class="form-floating mb-3">
+      <input
+        type="text"
+        class="form-control"
+        id="office"
+        formControlName="office"
+      />
+      <label for="office" class="form-label">Office or Station</label>
+      <div
+        *ngIf="
+          adminForm$.get('office')?.invalid && adminForm$.get('office')?.touched
+        "
+        class="text-danger"
+      >
+        Office is required
+      </div>
+    </div>
+
+    <div class="modal-footer">
+      <button
+        type="button"
+        class="btn btn-outline-dark"
+        (click)="activeModal.close(false)"
+      >
+        Cancel
+      </button>
+      <button type="submit" class="btn btn-dark">Submit</button>
+    </div>
+  </form>
+</div>

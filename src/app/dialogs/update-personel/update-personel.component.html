@@ -1,0 +1,88 @@
+<div class="modal-header bg-success">
+  <h4 class="modal-title text-white">Add Personnel</h4>
+  <button
+    type="button"
+    class="btn-close"
+    aria-label="Close"
+    (click)="activeModal.dismiss(false)"
+  ></button>
+</div>
+
+<div class="modal-body">
+  <form [formGroup]="personnelForm$" (submit)="onSubmit()">
+    <div class="form-floating mb-3">
+      <input
+        type="file"
+        class="form-control"
+        id="photo"
+        (change)="onFileSelected($event)"
+      />
+      <label for="photo" class="form-label">Photo</label>
+    </div>
+    <div class="form-floating mb-3">
+      <input
+        type="text"
+        class="form-control"
+        id="name"
+        formControlName="name"
+      />
+      <label for="name" class="form-label">Fullname</label>
+      <div
+        *ngIf="
+          personnelForm$.get('name')?.invalid &&
+          personnelForm$.get('name')?.touched
+        "
+        class="text-danger"
+      >
+        Fullname is required
+      </div>
+    </div>
+    <div class="form-floating mb-3">
+      <input
+        type="text"
+        class="form-control"
+        id="position"
+        formControlName="position"
+      />
+      <label for="position" class="form-label">Position</label>
+      <div
+        *ngIf="
+          personnelForm$.get('position')?.invalid &&
+          personnelForm$.get('position')?.touched
+        "
+        class="text-danger"
+      >
+        Position is required
+      </div>
+    </div>
+
+    <div class="form-floating mb-3">
+      <input
+        type="text"
+        class="form-control"
+        id="contact"
+        formControlName="contact"
+      />
+      <label for="contact" class="form-label">Contact</label>
+      <div
+        *ngIf="
+          personnelForm$.get('contact')?.invalid &&
+          personnelForm$.get('contact')?.touched
+        "
+        class="text-danger"
+      >
+        Contact is required
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button
+        type="button"
+        class="btn btn-outline-dark"
+        (click)="activeModal.close(false)"
+      >
+        Cancel
+      </button>
+      <button type="submit" class="btn btn-success">Submit</button>
+    </div>
+  </form>
+</div>

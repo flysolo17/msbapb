@@ -1,0 +1,105 @@
+<div class="modal-header bg-dark">
+  <h4 class="modal-title text-white">Create Location</h4>
+  <button
+    type="button"
+    class="btn-close"
+    aria-label="Close"
+    (click)="activeModal.dismiss(false)"
+  ></button>
+</div>
+
+<div class="modal-body">
+  <form [formGroup]="locationForm$" (submit)="onSubmit()">
+    <div class="form-floating mb-3">
+      <input
+        type="text"
+        class="form-control"
+        id="name"
+        formControlName="name"
+      />
+      <label for="name" class="form-label">Location name</label>
+      <div
+        *ngIf="
+          locationForm$.get('name')?.invalid &&
+          locationForm$.get('name')?.touched
+        "
+        class="text-danger"
+      >
+        Location name is required
+      </div>
+    </div>
+
+    <div class="form-floating mb-3">
+      <input
+        type="number"
+        class="form-control"
+        id="contact"
+        formControlName="contact"
+      />
+      <label for="contact" class="form-label">Contact</label>
+      <div
+        *ngIf="
+          locationForm$.get('contact')?.invalid &&
+          locationForm$.get('contact')?.touched
+        "
+        class="text-danger"
+      >
+        Contact is required
+      </div>
+    </div>
+
+    <div class="form-floating mb-3">
+      <input
+        type="number"
+        class="form-control"
+        id="lat"
+        formControlName="lat"
+      />
+      <label for="lat" class="form-label">Latitude</label>
+      <div
+        *ngIf="
+          locationForm$.get('lat')?.invalid && locationForm$.get('lat')?.touched
+        "
+        class="text-danger"
+      >
+        Latitude is required
+      </div>
+    </div>
+
+    <div class="form-floating mb-3">
+      <input
+        type="number"
+        class="form-control"
+        id="lang"
+        formControlName="lang"
+      />
+      <label for="lang" class="form-label">Longitude</label>
+      <div
+        *ngIf="
+          locationForm$.get('lang')?.invalid &&
+          locationForm$.get('lang')?.touched
+        "
+        class="text-danger"
+      >
+        Longitude is required
+      </div>
+    </div>
+
+    <div class="modal-footer">
+      <button
+        type="button"
+        class="btn btn-outline-dark"
+        (click)="activeModal.close('Close click')"
+      >
+        Cancel
+      </button>
+      <button
+        type="submit"
+        class="btn btn-dark"
+        [disabled]="locationForm$.invalid"
+      >
+        Submit
+      </button>
+    </div>
+  </form>
+</div>

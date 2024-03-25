@@ -1,0 +1,90 @@
+<div class="modal-header bg-dark">
+  <h4 class="modal-title text-white">Create News</h4>
+  <button
+    type="button"
+    class="btn-close btn-light"
+    aria-label="Close"
+    (click)="activeModal.dismiss(false)"
+  ></button>
+</div>
+
+<div class="modal-body">
+  <form [formGroup]="newsForm$" (submit)="onSubmit()">
+    <div class="form-floating mb-3">
+      <input
+        type="file"
+        accept="image/*"
+        class="form-control w-75"
+        id="photo"
+        (change)="onFileSelected($event)"
+        formControlName="photo"
+      />
+      <label for="photo" class="form-label">Photo</label>
+      <div
+        *ngIf="
+          newsForm$.get('photo')?.invalid && newsForm$.get('photo')?.touched
+        "
+        class="text-danger"
+      >
+        Photo is required
+      </div>
+    </div>
+
+    <div class="form-floating mb-3">
+      <input
+        type="text"
+        class="form-control"
+        id="title"
+        formControlName="title"
+      />
+      <label for="title" class="form-label">Title</label>
+      <div
+        *ngIf="
+          newsForm$.get('title')?.invalid && newsForm$.get('title')?.touched
+        "
+        class="text-danger"
+      >
+        Title is required
+      </div>
+    </div>
+
+    <div class="form-floating mb-3">
+      <textarea
+        class="form-control"
+        placeholder="Write a short description here"
+        id="description"
+        style="height: 200px"
+        formControlName="description"
+      ></textarea>
+      <label for="description">Write a short description here</label>
+    </div>
+
+    <div class="form-floating mb-3">
+      <input
+        type="text"
+        class="form-control"
+        id="link"
+        formControlName="link"
+      />
+      <label for="link" class="form-label">News Link</label>
+      <div
+        *ngIf="newsForm$.get('link')?.invalid && newsForm$.get('link')?.touched"
+        class="text-danger"
+      >
+        Link is required
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button
+        type="button"
+        class="btn btn-outline-dark"
+        (click)="activeModal.close(false)"
+      >
+        Cancel
+      </button>
+      <button type="submit" class="btn btn-dark" [disabled]="newsForm$.invalid">
+        Submit
+      </button>
+    </div>
+  </form>
+</div>

@@ -1,1 +1,51 @@
-<p>news works!</p>
+<div class="container-fluid">
+  <div class="d-flex flex-column">
+    <div class="filled-card">
+      <div class="d-flex align-items-center justify-content-between p-3">
+        <h6 class="text-dark">News & Updates</h6>
+        <button class="btn btn-dark" (click)="createNews()">
+          <i class="fa-solid fa-plus me-3"></i>
+          Create News
+        </button>
+      </div>
+      <input
+        id="table-complete-search"
+        type="text"
+        placeholder="Searh here..."
+        class="form-control search-input2"
+        name="searchTerm"
+        [(ngModel)]="searching"
+        (keyup)="filterNews()"
+      />
+    </div>
+
+    <div class="row align-items-stretch m-2">
+      <div class="col-3" *ngFor="let news of filteredNews$">
+        <div class="card" style="width: 100%; height: 100%">
+          <img
+            [src]="
+              news.photo ? news.photo : '../../../assets/images/person.jpg'
+            "
+            class="card-img-top"
+            alt="Profile"
+            height="200px"
+          />
+          <div class="card-body">
+            <h5 class="card-title">{{ news.title }}</h5>
+            <p class="card-text">
+              {{ news.description }}
+            </p>
+          </div>
+          <div class="card-footer border-0 d-flex gap-3">
+            <button class="btn btn-dark" (click)="openLinkInNewTab(news.link)">
+              Read more
+            </button>
+            <button class="btn btn-danger" (click)="deleteNews(news.id)">
+              <i class="fa-solid fa-delete-left"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

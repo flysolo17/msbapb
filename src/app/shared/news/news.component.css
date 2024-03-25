@@ -1,0 +1,19 @@
+.card-title {
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 1; /* Limit title to 1 line */
+  line-height: 1.2em; /* Adjust line height if needed */
+  max-height: 1.2em; /* Adjust max height if needed */
+  text-overflow: ellipsis; /* Add ellipsis */
+}
+
+.card-text {
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3; /* Limit text to 3 lines */
+  line-height: 1.2em; /* Adjust line height if needed */
+  max-height: 3.6em; /* Adjust max height based on line height and number of lines */
+  text-overflow: ellipsis; /* Add ellipsis */
+}
