@@ -65,7 +65,6 @@ export class PrintingService {
         {
           table: {
             headerRows: 1,
-
             body: [
               [
                 'ID',

@@ -32,7 +32,7 @@ export class BarangayService {
         })
       );
   }
-
+  
   deleteBarangay(id: number): Observable<ResponseData<any>> {
     return this.http
       .delete<ResponseData<any>>(`${this.url}delete.php?id=${id}`)
@@ -43,6 +43,7 @@ export class BarangayService {
         })
       );
   }
+
   getAllBarangay(): Observable<ResponseData<Barangay[]>> {
     return this.http.get<ResponseData<Barangay[]>>(this.url + 'all.php').pipe(
       catchError((error) => {

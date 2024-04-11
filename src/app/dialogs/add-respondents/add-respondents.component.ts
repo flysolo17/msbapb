@@ -26,11 +26,13 @@ export class AddRespondentsComponent implements OnInit {
   ngOnInit(): void {
     let respondents = this.data.respondents?.split(',');
     this.personelService.personels$.subscribe((data) => {
-      data.forEach((personel) => {
-        if (!respondents?.includes(personel.name)) {
-          this.personels$.push(personel);
-        }
-      });
+      data
+        .filter((e) => e.active == 1)
+        .forEach((personel) => {
+          if (!respondents?.includes(personel.name)) {
+            this.personels$.push(personel);
+          }
+        });
     });
   }
 

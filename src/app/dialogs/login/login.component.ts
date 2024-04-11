@@ -24,6 +24,7 @@ export class LoginComponent {
       password: ['', Validators.required],
     });
   }
+  
   onSubmit(): void {
     if (this.loginForm$.valid) {
       let email = this.loginForm$.get('email')?.value.toString();
@@ -32,4 +33,5 @@ export class LoginComponent {
       this.activeModal.close();
     }
   }
+
 }

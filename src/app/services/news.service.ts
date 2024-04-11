@@ -32,6 +32,8 @@ export class NewsService {
     form.append('description', description);
     form.append('link', link);
     form.append('type', type.toString());
+
+    
     return this.http
       .post<ResponseData<any>>(this.url + 'create.php', form)
       .pipe(
