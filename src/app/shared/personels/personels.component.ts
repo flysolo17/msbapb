@@ -58,6 +58,7 @@ export class PersonelsComponent {
   createPersonel() {
     const modalRef = this.modalService$.open(CreatePersonelComponent);
     modalRef.componentInstance.type = this.administrator$?.type;
+    // type of admin BFP (1) or PNP (2)
   }
 
   updatePersonel(personel: Personels) {
@@ -106,5 +107,13 @@ export class PersonelsComponent {
       },
       complete: () => this.refresh(),
     });
+  }
+
+  sample(personel: Personels) {
+    if (personel.active) {
+      //pinapakita yung number
+    } else {
+      //hindi pinapakita yung number
+    }
   }
 }

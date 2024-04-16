@@ -53,13 +53,16 @@
             <td>{{ personel.name }}</td>
             <td>{{ personel.position }}</td>
             <td>
-              {{ personel.contact }}
-              <button
-                class="btn btn-primary"
-                (click)="copyToClipboard(personel.contact)"
-              >
-                <i class="fa-solid fa-copy"></i>
-              </button>
+              <div *ngIf="personel.active; else notActive">
+                {{ personel.contact }}
+                <button
+                  class="btn btn-primary"
+                  (click)="copyToClipboard(personel.contact)"
+                >
+                  <i class="fa-solid fa-copy"></i>
+                </button>
+              </div>
+              <ng-template #notActive> </ng-template>
             </td>
             <td>
               <span class="badge text-bg-success" *ngIf="personel.active"
