@@ -2,6 +2,7 @@ import { Reporter } from './Reporter';
 
 export interface Incidents {
   id: number;
+  photo: string;
   status: string;
   location: string;
   type: string;
@@ -20,6 +21,7 @@ export const IncidentConverter = {
   fromJson: (json: any): Incidents => {
     return {
       id: json.id,
+      photo: json.photo,
       status: json.status,
       location: json.location,
       type: json.type,

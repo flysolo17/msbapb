@@ -9,6 +9,14 @@
 </div>
 
 <div class="modal-body">
+  <div>
+    <img
+      *ngIf="incident.photo !== null"
+      [src]="'https://danica.msbapb.com/api/uploads/' + incident.photo"
+      width="100%"
+      height="300dp"
+    />
+  </div>
   <div class="d-flex gap-3">
     <div class="p-3">
       <h5>Incident Information</h5>
