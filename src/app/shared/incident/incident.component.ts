@@ -170,6 +170,8 @@ export class IncidentComponent implements OnInit {
     modal.componentInstance.incident = incident;
   }
   openGoogleMap(lat: number, lng: number): void {
+    console.log(lat);
+    console.log(lng);
     // Check if the Geolocation API is available
     if (navigator.geolocation) {
       // Request the current location
