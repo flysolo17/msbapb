@@ -1,4 +1,10 @@
-import { Component, QueryList, ViewChildren, inject } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  QueryList,
+  ViewChildren,
+  inject,
+} from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrService } from 'ngx-toastr';
 import { Observable, Subscription } from 'rxjs';
@@ -20,11 +26,14 @@ import {
   templateUrl: './incident.component.html',
   styleUrls: ['./incident.component.css'],
 })
-export class IncidentComponent {
+export class IncidentComponent implements OnInit {
   incidents$: Observable<Incidents[]>;
   total$: Observable<number>;
   private modalService$ = inject(NgbModal);
   administrator$: Administrator | null = null;
+
+  latitude$: number = 0;
+  longitude$: number = 0;
   @ViewChildren(NgbdSortableHeader) headers: QueryList<NgbdSortableHeader>;
   constructor(
     private authService: AuthService,
@@ -40,6 +49,7 @@ export class IncidentComponent {
     this.total$ = incidentService.total$;
     this.refresh();
   }
+  ngOnInit(): void {}
 
   onSort({ column, direction }: SortEvent) {
     this.headers.forEach((header) => {
@@ -159,4 +169,60 @@ export class IncidentComponent {
     });
     modal.componentInstance.incident = incident;
   }
+  openGoogleMap(lat: number, lng: number): void {
+    // Check if the Geolocation API is available
+    if (navigator.geolocation) {
+      // Request the current location
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          // Success callback: handle the position
+          const currentLat = position.coords.latitude;
+          const currentLng = position.coords.longitude;
+
+          // Construct the Google Maps URL with the current location as origin and the specified destination
+          const uri = `https://www.google.com/maps/dir/?api=1&origin=${currentLat},${currentLng}&destination=${lat},${lng}&travelmode=driving&dir_action=navigate`;
+
+          // Open the constructed URL in a new tab
+          window.open(uri, '_blank');
+        },
+        (error) => {
+          // Error callback: handle the error
+          console.error('Error getting location:', error);
+          // You can handle the error, e.g., show an alert or provide a fallback action
+        },
+        {
+          enableHighAccuracy: true, // Optional: request high accuracy
+          timeout: 10000, // Optional: specify a timeout
+          maximumAge: 0, // Optional: specify the maximum age of a cached position
+        }
+      );
+    } else {
+      // Geolocation API is not available
+      console.error('Geolocation API is not available in this browser.');
+      // You can handle the lack of geolocation support, e.g., show an alert or provide a fallback action
+    }
+  }
+
+  // getCurrentLocation(): void {
+  //   if (navigator.geolocation) {
+  //     navigator.geolocation.getCurrentPosition(
+  //       (position) => {
+  //         const latitude = position.coords.latitude;
+  //         const longitude = position.coords.longitude;
+  //         this.latitude$ = latitude;
+  //         this.longitude$ = longitude;
+  //         console.log(`Latitude: ${latitude}, Longitude: ${longitude}`);
+  //       },
+  //       (error) => {
+  //         console.error('Error getting location:', error);
+  //       },
+  //       {
+  //         enableHighAccuracy: true,
+  //         timeout: 10000,
+  //         maximumAge: 0,
+  //       }
+  //     );
+  //   } else {
+  //   }
+  // }
 }

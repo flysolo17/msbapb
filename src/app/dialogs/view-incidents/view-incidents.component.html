@@ -9,6 +9,9 @@
 </div>
 
 <div class="modal-body">
+  <google-map height="450px" width="450px" [center]="center" [zoom]="zoom">
+  </google-map>
+
   <div>
     <img
       *ngIf="incident.photo !== null"

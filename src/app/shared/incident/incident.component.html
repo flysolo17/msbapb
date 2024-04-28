@@ -117,6 +117,15 @@
                 <i class="fa-solid fa-eye"></i>
               </button>
 
+              <button
+                class="btn btn-success"
+                (click)="
+                  openGoogleMap(incident.latitude ?? 0, incident.longitude ?? 0)
+                "
+              >
+                <i class="fa-solid fa-location-arrow"></i>
+              </button>
+
               <div class="d-inline-block" ngbDropdown #myDrop="ngbDropdown">
                 <button
                   type="button"

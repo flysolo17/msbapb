@@ -32,6 +32,8 @@ import { UpdatePersonelComponent } from './dialogs/update-personel/update-person
 import { ViewIncidentsComponent } from './dialogs/view-incidents/view-incidents.component';
 import { AddLocationsComponent } from './dialogs/add-locations/add-locations.component';
 import { EditProfileComponent } from './dialogs/edit-profile/edit-profile.component';
+import { GoogleMapsModule } from '@angular/google-maps';
+import { MessagingComponent } from './dialogs/messaging/messaging.component';
 
 @NgModule({
   declarations: [
@@ -54,11 +56,13 @@ import { EditProfileComponent } from './dialogs/edit-profile/edit-profile.compon
     ViewIncidentsComponent,
     AddLocationsComponent,
     EditProfileComponent,
+    MessagingComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     CommonModule,
+    FormsModule,
     HttpClientModule,
     AuthModule,
     NgbModule,
@@ -68,6 +72,7 @@ import { EditProfileComponent } from './dialogs/edit-profile/edit-profile.compon
     FormsModule,
     BrowserAnimationsModule,
     ReactiveFormsModule,
+    GoogleMapsModule,
     ToastrModule.forRoot(),
     FontAwesomeModule,
   ],

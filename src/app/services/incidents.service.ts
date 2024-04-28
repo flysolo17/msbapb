@@ -40,19 +40,37 @@ function sort(
     return incident;
   } else {
     return [...incident].sort((a, b) => {
+      let aValue: string | number;
+      let bValue: string | number;
+
+      // Check for Reporter type and extract fullname
       if (column === 'reporter') {
-        const res = compare(a[column].fullname, b[column].fullname);
-        return direction === 'asc' ? res : -res;
-      } else if (column === 'respondents') {
-        // Handle the case where respondents is null
-        const aRespondents = a[column] || [];
-        const bRespondents = b[column] || [];
-        const res = compare(aRespondents.length, bRespondents.length);
-        return direction === 'asc' ? res : -res;
+        aValue = a[column] ? a[column].fullname : ''; // Use fullname from Reporter or empty string
+        bValue = b[column] ? b[column].fullname : ''; // Use fullname from Reporter or empty string
       } else {
-        const res = compare(a[column], b[column]);
-        return direction === 'asc' ? res : -res;
+        // Handle other types (string, number, or null)
+        if (a[column] === null) {
+          aValue =
+            direction === 'asc'
+              ? Number.NEGATIVE_INFINITY
+              : Number.POSITIVE_INFINITY;
+        } else {
+          aValue = a[column] as string | number;
+        }
+
+        if (b[column] === null) {
+          bValue =
+            direction === 'asc'
+              ? Number.NEGATIVE_INFINITY
+              : Number.POSITIVE_INFINITY;
+        } else {
+          bValue = b[column] as string | number;
+        }
       }
+
+      // Compare the values
+      const res = compare(aValue, bValue);
+      return direction === 'asc' ? res : -res;
     });
   }
 }

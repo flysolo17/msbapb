@@ -1,0 +1,89 @@
+<div class="modal-header bg-danger">
+  <h5 class="modal-title text-white">Alert Users</h5>
+  <button
+    type="button"
+    class="btn-close"
+    aria-label="Close"
+    (click)="activeModal.dismiss(false)"
+  ></button>
+</div>
+
+<div class="modal-body">
+  <form [formGroup]="messageForm$" (submit)="submit()">
+    <div class="form-floating mb-3">
+      <input
+        type="text"
+        class="form-control"
+        id="floatingInputDisabled"
+        value="SEMAPHORE"
+        disabled
+      />
+      <label for="floatingInputDisabled">Username</label>
+    </div>
+
+    <form class="form-floating mb-3">
+      <input
+        type="text"
+        class="form-control"
+        id="floatingInputValue"
+        placeholder="John Doe"
+        [(ngModel)]="allNames$"
+        name="userInputName"
+        disabled
+      />
+      <label for="floatingInputValue">Users</label>
+    </form>
+
+    <div class="input-group mb-3">
+      <div class="form-floating flex-fill">
+        <input
+          [type]="showPassword ? 'text' : 'password'"
+          class="form-control"
+          id="apiKey"
+          formControlName="apiKey"
+          placeholder="Enter Api Key"
+        />
+
+        <label for="apiKey" class="form-label">Enter Api Key</label>
+        <div
+          *ngIf="
+            messageForm$.get('apiKey')?.invalid &&
+            messageForm$.get('apiKey')?.touched
+          "
+          class="text-danger"
+        >
+          Api Key is Required
+        </div>
+      </div>
+      <button
+        type="button"
+        class="btn btn-outline-secondary"
+        (click)="togglePasswordVisibility()"
+      >
+        <i class="far" [ngClass]="showPassword ? 'fa-eye-slash' : 'fa-eye'">
+        </i>
+      </button>
+    </div>
+
+    <div class="form-floating mb-3">
+      <textarea
+        class="form-control"
+        placeholder="Leave a comment here"
+        id="floatingTextarea2"
+        style="height: 100px"
+        formControlName="message"
+      ></textarea>
+      <label for="floatingTextarea2">Message</label>
+    </div>
+
+    <div class="modal-footer">
+      <button
+        type="submit"
+        class="btn btn-dark"
+        [disabled]="messageForm$.invalid"
+      >
+        Send
+      </button>
+    </div>
+  </form>
+</div>
