@@ -32,9 +32,9 @@ import { UpdatePersonelComponent } from './dialogs/update-personel/update-person
 import { ViewIncidentsComponent } from './dialogs/view-incidents/view-incidents.component';
 import { AddLocationsComponent } from './dialogs/add-locations/add-locations.component';
 import { EditProfileComponent } from './dialogs/edit-profile/edit-profile.component';
-import { GoogleMapsModule } from '@angular/google-maps';
-import { MessagingComponent } from './dialogs/messaging/messaging.component';
 
+import { MessagingComponent } from './dialogs/messaging/messaging.component';
+import { NgxMapLibreGLModule } from '@maplibre/ngx-maplibre-gl';
 @NgModule({
   declarations: [
     AppComponent,
@@ -49,6 +49,7 @@ import { MessagingComponent } from './dialogs/messaging/messaging.component';
     AddRespondentsComponent,
     ResetPasswordComponent,
     BarangaysComponent,
+
     CreateBarangayComponent,
     UpdateBarangayComponent,
     CreateNewsComponent,
@@ -72,7 +73,7 @@ import { MessagingComponent } from './dialogs/messaging/messaging.component';
     FormsModule,
     BrowserAnimationsModule,
     ReactiveFormsModule,
-    GoogleMapsModule,
+    NgxMapLibreGLModule,
     ToastrModule.forRoot(),
     FontAwesomeModule,
   ],

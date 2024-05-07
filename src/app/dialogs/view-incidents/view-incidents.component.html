@@ -9,16 +9,24 @@
 </div>
 
 <div class="modal-body">
-  <google-map height="450px" width="450px" [center]="center" [zoom]="zoom">
-  </google-map>
-
-  <div>
+  <div class="d-flex align-items-center gap-3">
     <img
       *ngIf="incident.photo !== null"
+      style="width: 200px; height: 200px"
       [src]="'https://danica.msbapb.com/api/uploads/' + incident.photo"
-      width="100%"
-      height="300dp"
     />
+    <mgl-map
+      [style]="
+        'https://api.maptiler.com/maps/streets/style.json?key=XwEEXGdg9PrDGbX4C0fJ'
+      "
+      [zoom]="[14]"
+      [center]="[incident.latitude, incident.longitude]"
+    >
+      <mgl-marker
+        [lngLat]="[incident.latitude, incident.longitude]"
+      ></mgl-marker>
+      <mgl-control mglNavigation position="top-left"></mgl-control>
+    </mgl-map>
   </div>
   <div class="d-flex gap-3">
     <div class="p-3">

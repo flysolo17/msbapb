@@ -120,7 +120,11 @@
               <button
                 class="btn btn-success"
                 (click)="
-                  openGoogleMap(incident.latitude ?? 0, incident.longitude ?? 0)
+                  openGoogleMap(
+                    incident.location,
+                    incident.latitude,
+                    incident.longitude
+                  )
                 "
               >
                 <i class="fa-solid fa-location-arrow"></i>

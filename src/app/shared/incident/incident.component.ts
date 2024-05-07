@@ -169,23 +169,18 @@ export class IncidentComponent implements OnInit {
     });
     modal.componentInstance.incident = incident;
   }
-  openGoogleMap(lat: number, lng: number): void {
-    console.log(lat);
-    console.log(lng);
-    // Check if the Geolocation API is available
+  getLocationAddress(lat: number, lng: number) {}
+  openGoogleMap(location: string, lat: number, lng: number): void {
     if (navigator.geolocation) {
-      // Request the current location
       navigator.geolocation.getCurrentPosition(
         (position) => {
           // Success callback: handle the position
           const currentLat = position.coords.latitude;
           const currentLng = position.coords.longitude;
 
-          // Construct the Google Maps URL with the current location as origin and the specified destination
-          const uri = `https://www.google.com/maps/dir/?api=1&origin=${currentLat},${currentLng}&destination=${lat},${lng}&travelmode=driving&dir_action=navigate`;
+          const url = `http://maps.google.com/maps?q=loc:${location}`;
 
-          // Open the constructed URL in a new tab
-          window.open(uri, '_blank');
+          window.open(url, '_blank');
         },
         (error) => {
           // Error callback: handle the error
@@ -193,15 +188,13 @@ export class IncidentComponent implements OnInit {
           // You can handle the error, e.g., show an alert or provide a fallback action
         },
         {
-          enableHighAccuracy: true, // Optional: request high accuracy
-          timeout: 10000, // Optional: specify a timeout
-          maximumAge: 0, // Optional: specify the maximum age of a cached position
+          enableHighAccuracy: true,
+          timeout: 10000,
+          maximumAge: 0,
         }
       );
     } else {
-      // Geolocation API is not available
       console.error('Geolocation API is not available in this browser.');
-      // You can handle the lack of geolocation support, e.g., show an alert or provide a fallback action
     }
   }
 
